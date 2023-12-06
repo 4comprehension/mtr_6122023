@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 class MovieController {
@@ -33,8 +34,8 @@ class MovieController {
     }
 
     @GetMapping("/movies/{id}")
-    public MovieDto getMovies(@PathVariable int id) {
-        return from(movieService.findById(id));
+    public Optional<MovieDto> getMovies(@PathVariable int id) {
+        return movieService.findById(id).map(MovieController::from);
     }
 
     @PostMapping("/movies")

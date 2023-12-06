@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MovieService {
@@ -31,7 +32,7 @@ public class MovieService {
         return findAll().stream().filter(m -> m.getType() == type).toList();
     }
 
-    public Movie findById(int id) {
-        return movieRepository.findById(new MovieId(id)).orElse(null);
+    public Optional<Movie> findById(int id) {
+        return movieRepository.findById(new MovieId(id));
     }
 }
