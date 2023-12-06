@@ -2,12 +2,10 @@ package com.pivovarit.domain.rental;
 
 import com.pivovarit.domain.rental.api.MovieAddRequest;
 import com.pivovarit.domain.rental.api.MovieDto;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-@Service
 public class RentalFacade {
 
     private final MovieRepository movieRepository;

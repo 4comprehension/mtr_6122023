@@ -1,14 +1,11 @@
 package com.pivovarit.domain.rental;
 
-import org.springframework.stereotype.Service;
-
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
-//@Service
 class InMemoryMovieRepository implements MovieRepository {
 
     private final Map<MovieId, Movie> movies = new ConcurrentHashMap<>();

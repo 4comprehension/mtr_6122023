@@ -2,13 +2,11 @@ package com.pivovarit.domain.rental;
 
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.JdbcClient;
-import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-@Component
 record JdbcMovieRepository(JdbcClient jdbcClient) implements MovieRepository {
 
     @Override
