@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
-@Service
+//@Service
 class InMemoryMovieRepository implements MovieRepository {
 
     private final Map<MovieId, Movie> movies = new ConcurrentHashMap<>();
