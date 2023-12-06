@@ -3,14 +3,17 @@ package com.pivovarit.movies.repository;
 import com.pivovarit.movies.domain.Movie;
 import com.pivovarit.movies.domain.MovieId;
 import com.pivovarit.movies.domain.MovieType;
+import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Optional;
 
+@Service
 public class MovieRepository {
 
     public MovieId save(Movie movie) {
+        System.out.println(movie);
         return new MovieId(42);
     }
 
