@@ -1,8 +1,6 @@
-package com.pivovarit.movies.domain;
+package com.pivovarit.domain.rental;
 
-import com.pivovarit.movies.api.MovieAddRequest;
-import com.pivovarit.movies.repository.MovieRepository;
-import com.pivovarit.movies.service.RentalService;
+import com.pivovarit.domain.rental.api.MovieAddRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -14,7 +12,7 @@ import static org.mockito.Mockito.*;
 public class RentalServiceTest {
  
     @InjectMocks
-    private RentalService rentalService;
+    private RentalFacade rentalService;
  
     @Mock
     private MovieRepository movieRepository;
@@ -39,7 +37,7 @@ public class RentalServiceTest {
  
     @Test
     public void findAllByTypeTest() {
-        MovieType movieType = MovieType.NEW;
+        String movieType = MovieType.NEW.toString();
         rentalService.findAllByType(movieType);
         verify(movieRepository, times(1)).findAll();
     }

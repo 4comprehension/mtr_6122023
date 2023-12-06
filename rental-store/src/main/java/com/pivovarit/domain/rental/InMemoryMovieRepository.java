@@ -1,8 +1,5 @@
-package com.pivovarit.movies.repository;
+package com.pivovarit.domain.rental;
 
-import com.pivovarit.movies.domain.Movie;
-import com.pivovarit.movies.domain.MovieId;
-import com.pivovarit.movies.domain.MovieType;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -12,14 +9,14 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Service
-public class InMemoryMovieRepository implements MovieRepository {
+class InMemoryMovieRepository implements MovieRepository {
 
     private final Map<MovieId, Movie> movies = new ConcurrentHashMap<>();
 
     @Override
     public MovieId save(Movie movie) {
-        movies.put(movie.getId(), movie);
-        return movie.getId();
+        movies.put(movie.id(), movie);
+        return movie.id();
     }
 
     @Override
@@ -29,12 +26,12 @@ public class InMemoryMovieRepository implements MovieRepository {
 
     @Override
     public Optional<Movie> findByTitle(String title) {
-        return movies.values().stream().filter(m -> m.getTitle().equals(title)).findFirst();
+        return movies.values().stream().filter(m -> m.title().equals(title)).findFirst();
     }
 
     @Override
     public List<Movie> findByType(MovieType type) {
-        return movies.values().stream().filter(m -> m.getType() == type).toList();
+        return movies.values().stream().filter(m -> m.type() == type).toList();
     }
 
     @Override
