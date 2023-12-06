@@ -1,10 +1,9 @@
 package com.pivovarit.movies.domain;
 
 import com.pivovarit.movies.api.MovieAddRequest;
-import com.pivovarit.movies.repository.MovieRepository;
-import com.pivovarit.movies.service.MovieService;
+import com.pivovarit.movies.repository.InMemoryMovieRepository;
+import com.pivovarit.movies.service.RentalService;
 import org.junit.jupiter.api.RepeatedTest;
-import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -12,7 +11,7 @@ class MovieServiceUnitTest {
 
     @RepeatedTest(10000)
     void should_add_movie() {
-        MovieService service = inMemoryInstance();
+        RentalService service = inMemoryInstance();
 
         var request = new MovieAddRequest(42, "Spiderman", MovieType.NEW.toString());
 
@@ -25,7 +24,7 @@ class MovieServiceUnitTest {
         assertThat(result.getTitle()).isEqualTo(request.getTitle());
     }
 
-    private static MovieService inMemoryInstance() {
-        return new MovieService(new MovieRepository());
+    private static RentalService inMemoryInstance() {
+        return new RentalService(new InMemoryMovieRepository());
     }
 }

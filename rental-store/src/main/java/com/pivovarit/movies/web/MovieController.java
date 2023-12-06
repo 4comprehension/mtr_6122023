@@ -4,7 +4,7 @@ import com.pivovarit.movies.api.MovieAddRequest;
 import com.pivovarit.movies.api.MovieDto;
 import com.pivovarit.movies.domain.Movie;
 import com.pivovarit.movies.domain.MovieType;
-import com.pivovarit.movies.service.MovieService;
+import com.pivovarit.movies.service.RentalService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,9 +18,9 @@ import java.util.Optional;
 @RestController
 class MovieController {
 
-    private final MovieService movieService;
+    private final RentalService movieService;
 
-    MovieController(MovieService movieService) {
+    MovieController(RentalService movieService) {
         this.movieService = movieService;
     }
 

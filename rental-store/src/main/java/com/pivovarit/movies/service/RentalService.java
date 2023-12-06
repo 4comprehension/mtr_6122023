@@ -11,12 +11,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Service class for managing movie rentals.
+ */
 @Service
-public class MovieService {
+public class RentalService {
 
     private final MovieRepository movieRepository;
 
-    public MovieService(MovieRepository movieRepository) {
+    public RentalService(MovieRepository movieRepository) {
         this.movieRepository = movieRepository;
     }
 
