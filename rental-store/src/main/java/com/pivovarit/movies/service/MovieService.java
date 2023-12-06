@@ -16,7 +16,7 @@ public class MovieService {
 
     private final MovieRepository movieRepository;
 
-    MovieService(MovieRepository movieRepository) {
+    public MovieService(MovieRepository movieRepository) {
         this.movieRepository = movieRepository;
     }
 
