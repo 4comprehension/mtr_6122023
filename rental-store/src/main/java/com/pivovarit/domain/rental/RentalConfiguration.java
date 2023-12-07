@@ -1,5 +1,6 @@
 package com.pivovarit.domain.rental;
 
+import com.pivovarit.domain.descriptions.DescriptionsFacade;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -7,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 class RentalConfiguration {
 
     @Bean
-    RentalFacade rentalFacade(MovieRepository movieRepository) {
-        return new RentalFacade(movieRepository);
+    RentalFacade rentalFacade(MovieRepository movieRepository, DescriptionsFacade descriptions) {
+        return new RentalFacade(movieRepository, descriptions);
     }
 }

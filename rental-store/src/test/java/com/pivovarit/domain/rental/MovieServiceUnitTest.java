@@ -1,5 +1,6 @@
 package com.pivovarit.domain.rental;
 
+import com.pivovarit.domain.descriptions.DescriptionsFacade;
 import com.pivovarit.domain.rental.api.MovieAddRequest;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.RepeatedTest;
@@ -25,6 +26,6 @@ class MovieServiceUnitTest {
     }
 
     private static RentalFacade inMemoryInstance() {
-        return new RentalFacade(new InMemoryMovieRepository());
+        return new RentalFacade(new InMemoryMovieRepository(), new DescriptionsFacade());
     }
 }
