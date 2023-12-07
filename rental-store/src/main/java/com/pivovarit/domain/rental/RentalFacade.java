@@ -15,11 +15,11 @@ public record RentalFacade(
   RentalHistoryRepository rentalHistory) {
 
     public void rentMovie(RentMovieRequest request) {
-        rentalHistory.save(new RentalEvent(RentalEvent.EventType.RENT, new MovieId(request.movieId()), request.accountId()));
+        rentalHistory.save(new RentalEvent(EventType.RENT, new MovieId(request.movieId()), request.accountId()));
     }
 
     public void returnMovie(ReturnMovieRequest request) {
-        rentalHistory.save(new RentalEvent(RentalEvent.EventType.RETURN, new MovieId(request.movieId()), request.accountId()));
+        rentalHistory.save(new RentalEvent(EventType.RETURN, new MovieId(request.movieId()), request.accountId()));
     }
 
     public void save(MovieAddRequest movieAddRequest) {

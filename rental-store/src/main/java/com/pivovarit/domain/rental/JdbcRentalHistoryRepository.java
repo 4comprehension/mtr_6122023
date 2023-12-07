@@ -17,18 +17,23 @@ record JdbcRentalHistoryRepository(JdbcClient jdbcClient) implements RentalHisto
     }
 
     @Override
-    public List<RentalEvent> findAll() {
+    public List<PersistedRentalEvent> findAll() {
         return jdbcClient.sql("SELECT * FROM rental_history").query(toRentalEvent()).list();
     }
 
     @Override
-    public List<RentalEvent> findAllBy(long accountId) {
+    public List<PersistedRentalEvent> findAllBy(long accountId) {
         return jdbcClient.sql("SELECT * FROM rental_history WHERE account_id = ?")
           .param(accountId)
           .query(toRentalEvent()).list();
     }
 
-    private static RowMapper<RentalEvent> toRentalEvent() {
-        return (rs, rowNum) -> new RentalEvent(RentalEvent.EventType.valueOf(rs.getString("event_type")), new MovieId(rs.getLong("movie_id")), rs.getLong("account_id"));
+    private static RowMapper<PersistedRentalEvent> toRentalEvent() {
+        return (rs, rowNum) -> new PersistedRentalEvent(
+          rs.getLong("id"),
+          EventType.valueOf(rs.getString("event_type")),
+          rs.getTimestamp("timestamp").toInstant(),
+          rs.getLong("account_id"),
+          rs.getLong("movie_id"));
     }
 }

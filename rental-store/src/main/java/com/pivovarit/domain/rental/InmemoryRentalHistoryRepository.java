@@ -1,26 +1,27 @@
 package com.pivovarit.domain.rental;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 class InmemoryRentalHistoryRepository implements RentalHistoryRepository {
 
-    private final List<RentalEvent> events = Collections.synchronizedList(new ArrayList<>());
+    private final List<PersistedRentalEvent> events = Collections.synchronizedList(new ArrayList<>());
 
     @Override
     public void save(RentalEvent event) {
-        System.out.println(event.toString());
-        events.add(event);
+        events.add(new PersistedRentalEvent(events.size() + 1, event.type(), Instant.now(), event.accountId(), event.id()
+          .id()));
     }
 
     @Override
-    public List<RentalEvent> findAll() {
+    public List<PersistedRentalEvent> findAll() {
         return List.copyOf(events);
     }
 
     @Override
-    public List<RentalEvent> findAllBy(long accountId) {
+    public List<PersistedRentalEvent> findAllBy(long accountId) {
         return events.stream().filter(e -> e.accountId() == accountId).toList();
     }
 }

@@ -1,5 +1,6 @@
 package com.pivovarit.domain.rental;
 
+import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -12,5 +13,10 @@ class RentalConfiguration {
     @Bean
     RentalFacade rentalFacade(MovieRepository movieRepository, DescriptionsRepository descriptions, RentalHistoryRepository rentalHistoryRepository) {
         return new RentalFacade(movieRepository, descriptions, rentalHistoryRepository);
+    }
+
+    @Bean
+    ApplicationRunner rentalHistoryPeeker(RentalHistoryRepository rentalHistoryRepository) {
+        return args -> rentalHistoryRepository.findAll().forEach(System.out::println);
     }
 }
