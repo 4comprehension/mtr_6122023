@@ -22,6 +22,11 @@ class RentalDevConfiguration {
     }
 
     @Bean
+    RentalHistoryRepository inmemRentalHistoryRepository() {
+        return new InmemoryRentalHistoryRepository();
+    }
+
+    @Bean
     ApplicationRunner moviePopulator(MovieRepository movieRepository) {
         return args -> {
             movieRepository.save(new Movie(new MovieId(1), "Spiderman", MovieType.REGULAR));
