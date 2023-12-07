@@ -5,6 +5,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
+import java.util.Optional;
+
 @Configuration
 @Profile("dev")
 class RentalDevConfiguration {
@@ -12,6 +14,11 @@ class RentalDevConfiguration {
     @Bean
     MovieRepository inmemMovieRepository() {
         return new InMemoryMovieRepository();
+    }
+    
+    @Bean
+    DescriptionsRepository inmemDescriptionsRepository() {
+        return movieId -> Optional.of("lorem ipsum");
     }
 
     @Bean

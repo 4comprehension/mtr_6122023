@@ -1,6 +1,5 @@
 package com.pivovarit.domain.rental;
 
-import com.pivovarit.domain.descriptions.DescriptionsFacade;
 import com.pivovarit.domain.rental.api.MovieAddRequest;
 import com.pivovarit.domain.rental.api.MovieDto;
 

@@ -1,4 +1,4 @@
-package com.pivovarit.domain.descriptions.api;
+package com.pivovarit.domain.descriptions;
 
 import com.pivovarit.domain.descriptions.DescriptionsFacade;
 import org.springframework.context.annotation.Bean;
