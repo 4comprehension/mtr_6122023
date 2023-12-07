@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
-public record RentalFacade(MovieRepository movieRepository, DescriptionsFacade movieDescriptions) {
+public record RentalFacade(MovieRepository movieRepository, DescriptionsRepository movieDescriptions) {
 
     public void save(MovieAddRequest movieAddRequest) {
         movieRepository.save(new Movie(new MovieId(movieAddRequest.id()), movieAddRequest.title(), MovieType.valueOf(movieAddRequest.type())));
@@ -28,7 +28,7 @@ public record RentalFacade(MovieRepository movieRepository, DescriptionsFacade m
 
     private Function<Movie, MovieDto> toMovieWithDescription() {
         return movie -> movieDescriptions.getDescription((int) movie.id().id())
-          .map(d -> MovieConverters.from(movie, d.description()))
+          .map(desc -> MovieConverters.from(movie, desc))
           .orElseGet(() -> MovieConverters.from(movie, ""));
     }
 }
