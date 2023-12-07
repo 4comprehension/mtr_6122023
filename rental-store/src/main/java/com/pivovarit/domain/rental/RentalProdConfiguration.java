@@ -21,4 +21,9 @@ class RentalProdConfiguration {
           .baseUrl(url)
           .build());
     }
+
+    @Bean
+    RentalHistoryRepository rentalHistoryRepository(JdbcClient jdbcClient) {
+        return new JdbcRentalHistoryRepository(jdbcClient);
+    }
 }
