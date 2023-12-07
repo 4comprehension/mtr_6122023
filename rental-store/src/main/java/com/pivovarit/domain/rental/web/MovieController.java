@@ -22,6 +22,9 @@ public class MovieController {
         this.movieService = movieService;
     }
 
+    // TODO @PostMapping("/movies/{id}/rent")
+    // TODO @PostMapping("/movies/{id}/return")
+
     @GetMapping(value = "/movies", params = "type")
     public List<MovieDto> getMoviesByType(@RequestParam String type) {
         return movieService.findAllByType(type).stream().toList();
