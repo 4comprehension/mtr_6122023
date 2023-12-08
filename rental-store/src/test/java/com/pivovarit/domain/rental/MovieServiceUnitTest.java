@@ -6,8 +6,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 class MovieServiceUnitTest {
 
     @Test
@@ -27,6 +25,6 @@ class MovieServiceUnitTest {
 
     private static RentalFacade inMemoryInstance() {
         var rentalHistory = new InMemoryRentalHistoryRepository();
-        return new RentalFacade(new InMemoryMovieRepository(), movieId -> Optional.empty(), rentalHistory, new RentalProjections(rentalHistory));
+        return new RentalFacade(new InMemoryMovieRepository(), movieId -> Optional.empty(), rentalHistory, new RentalProjections(rentalHistory), event -> {});
     }
 }
