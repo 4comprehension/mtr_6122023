@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-class InmemoryRentalHistoryRepository implements RentalHistoryRepository {
+class InMemoryRentalHistoryRepository implements RentalHistoryRepository {
 
     private final List<PersistedRentalEvent> events = Collections.synchronizedList(new ArrayList<>());
 

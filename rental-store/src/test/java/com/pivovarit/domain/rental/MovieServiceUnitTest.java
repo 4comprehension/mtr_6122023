@@ -2,7 +2,6 @@ package com.pivovarit.domain.rental;
 
 import com.pivovarit.domain.rental.api.MovieAddRequest;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
@@ -27,7 +26,7 @@ class MovieServiceUnitTest {
     }
 
     private static RentalFacade inMemoryInstance() {
-        var rentalHistory = new InmemoryRentalHistoryRepository();
+        var rentalHistory = new InMemoryRentalHistoryRepository();
         return new RentalFacade(new InMemoryMovieRepository(), movieId -> Optional.empty(), rentalHistory, new RentalProjections(rentalHistory));
     }
 }

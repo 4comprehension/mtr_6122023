@@ -32,6 +32,7 @@ public record RentalFacade(
             var userRentals = rentalProjections.userRentals(request.accountId());
             userRentals.returnMovie(new MovieId(request.movieId()));
             rentalHistory.save(new RentalEvent(EventType.RETURN, new MovieId(request.movieId()), request.accountId(), userRentals.getVersion()));
+
         }, 3);
     }
 

@@ -23,7 +23,7 @@ class RentalDevConfiguration {
 
     @Bean
     RentalHistoryRepository inmemRentalHistoryRepository() {
-        return new InmemoryRentalHistoryRepository();
+        return new InMemoryRentalHistoryRepository();
     }
 
     @Bean
