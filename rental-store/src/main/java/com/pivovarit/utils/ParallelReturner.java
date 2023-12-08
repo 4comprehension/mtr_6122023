@@ -13,7 +13,7 @@ class ParallelReturner {
           .baseUrl("http://localhost:8081")
           .build();
 
-        int parallelism = 100;
+        int parallelism = 5;
         try (var executor = Executors.newFixedThreadPool(parallelism)) {
 
             CountDownLatch countDownLatch = new CountDownLatch(parallelism);
@@ -26,10 +26,15 @@ class ParallelReturner {
                         countDownLatch.await();
                     } catch (InterruptedException e) {
                     }
-                    client.post()
-                      .uri("/movies/{id}/rent", finalI)
-                      .body(new Account(1))
-                      .retrieve();
+                    try {
+                        client.post()
+                          .uri("/movies/{id}/rent", finalI)
+                          .body(new Account(1))
+                          .retrieve()
+                          .toBodilessEntity();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 });
             }
         }

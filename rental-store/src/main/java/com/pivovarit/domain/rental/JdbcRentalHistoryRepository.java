@@ -9,10 +9,11 @@ record JdbcRentalHistoryRepository(JdbcClient jdbcClient) implements RentalHisto
 
     @Override
     public void save(RentalEvent event) {
-        jdbcClient.sql("INSERT INTO rental_history(event_type, account_id, movie_id) VALUES(?,?,?)")
+        jdbcClient.sql("INSERT INTO rental_history(event_type, account_id, movie_id, account_version) VALUES(?,?,?,?)")
           .param(event.type().toString())
           .param(event.accountId())
           .param(event.movieId().id())
+          .param(event.accountVersion())
           .update();
     }
 
@@ -34,6 +35,7 @@ record JdbcRentalHistoryRepository(JdbcClient jdbcClient) implements RentalHisto
           EventType.valueOf(rs.getString("event_type")),
           rs.getTimestamp("timestamp").toInstant(),
           rs.getLong("account_id"),
-          rs.getLong("movie_id"));
+          rs.getLong("movie_id"),
+          rs.getLong("account_version"));
     }
 }

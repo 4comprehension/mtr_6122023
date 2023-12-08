@@ -16,26 +16,15 @@ public record RentalFacade(
   RentalProjections rentalProjections) {
 
     public void rentMovie(RentMovieRequest request) {
-        var rentals = rentalProjections.userRentals(request.accountId());
-        System.out.println(rentals);
-        if (!rentals.canRentMovies()) {
-            throw new IllegalArgumentException("User has reached the maximum number of rentals");
-        }
-        if (!rentals.canRent(new MovieId(request.movieId()))) {
-            throw new IllegalArgumentException("User cannot rent movie: " + request.movieId());
-        }
-        rentalHistory.save(new RentalEvent(EventType.RENT, new MovieId(request.movieId()), request.accountId()));
+        var userRentals = rentalProjections.userRentals(request.accountId());
+        userRentals.rent(new MovieId(request.movieId()));
+        rentalHistory.save(new RentalEvent(EventType.RENT, new MovieId(request.movieId()), request.accountId(), userRentals.getVersion()));
     }
 
     public void returnMovie(ReturnMovieRequest request) {
-        var rentals = rentalProjections.userRentals(request.accountId());
-        System.out.println(rentals);
-
-        if (!rentals.canReturn(new MovieId(request.movieId()))) {
-            throw new IllegalArgumentException("User cannot return movie: " + request.movieId());
-        }
-
-        rentalHistory.save(new RentalEvent(EventType.RETURN, new MovieId(request.movieId()), request.accountId()));
+        var userRentals = rentalProjections.userRentals(request.accountId());
+        userRentals.returnMovie(new MovieId(request.movieId()));
+        rentalHistory.save(new RentalEvent(EventType.RETURN, new MovieId(request.movieId()), request.accountId(), userRentals.getVersion()));
     }
 
     public void save(MovieAddRequest movieAddRequest) {
