@@ -15,10 +15,13 @@ public record RentalFacade(
   RentalHistoryRepository rentalHistory) {
 
     public void rentMovie(RentMovieRequest request) {
+        // TODO nie pozwalał userowi wypożyczyć więcej niż 5 filmów
+        // TODO nie pozwalał userowi wypożyczyć tego samego filmu więcej niż raz
         rentalHistory.save(new RentalEvent(EventType.RENT, new MovieId(request.movieId()), request.accountId()));
     }
 
     public void returnMovie(ReturnMovieRequest request) {
+        // TODO nie pozwalać userowi zwrócić tego samego filmu dwa razy
         rentalHistory.save(new RentalEvent(EventType.RETURN, new MovieId(request.movieId()), request.accountId()));
     }
 
