@@ -24,4 +24,14 @@ class InMemoryRentalHistoryRepository implements RentalHistoryRepository {
     public List<PersistedRentalEvent> findAllBy(long accountId) {
         return events.stream().filter(e -> e.accountId() == accountId).toList();
     }
+
+    @Override
+    public List<PersistedRentalEvent> findUnprocessed() {
+        return events;
+    }
+
+    @Override
+    public int markProcessed(long eventId) {
+        return 0;
+    }
 }

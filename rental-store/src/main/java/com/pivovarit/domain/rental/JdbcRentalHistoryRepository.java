@@ -29,6 +29,18 @@ record JdbcRentalHistoryRepository(JdbcClient jdbcClient) implements RentalHisto
           .query(toRentalEvent()).list();
     }
 
+    @Override
+    public List<PersistedRentalEvent> findUnprocessed() {
+        return jdbcClient.sql("SELECT * FROM rental_history WHERE processed = false ORDER BY id").query(toRentalEvent()).list();
+    }
+
+    @Override
+    public int markProcessed(long eventId) {
+        return jdbcClient.sql("UPDATE rental_history SET processed = true WHERE id = ?")
+          .param(eventId)
+          .update();
+    }
+
     private static RowMapper<PersistedRentalEvent> toRentalEvent() {
         return (rs, rowNum) -> new PersistedRentalEvent(
           rs.getLong("id"),

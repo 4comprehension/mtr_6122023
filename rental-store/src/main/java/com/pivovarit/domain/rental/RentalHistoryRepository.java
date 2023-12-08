@@ -8,4 +8,8 @@ interface RentalHistoryRepository {
     List<PersistedRentalEvent> findAll();
 
     List<PersistedRentalEvent> findAllBy(long accountId);
+
+    List<PersistedRentalEvent> findUnprocessed();
+
+    int markProcessed(long eventId);
 }

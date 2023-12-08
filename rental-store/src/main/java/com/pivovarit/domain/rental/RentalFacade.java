@@ -27,7 +27,6 @@ public record RentalFacade(
             userRentals.rent(new MovieId(request.movieId()));
             var event = new RentalEvent(EventType.RENT, new MovieId(request.movieId()), request.accountId(), userRentals.getVersion());
             rentalHistory.save(event);
-            messagePublisher.send(event);
         }, 3);
     }
 
@@ -37,7 +36,6 @@ public record RentalFacade(
             userRentals.returnMovie(new MovieId(request.movieId()));
             var event = new RentalEvent(EventType.RETURN, new MovieId(request.movieId()), request.accountId(), userRentals.getVersion());
             rentalHistory.save(event);
-            messagePublisher.send(event);
         }, 3);
     }
 

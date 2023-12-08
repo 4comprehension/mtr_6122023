@@ -16,6 +16,11 @@ class RentalProdConfiguration {
     }
 
     @Bean
+    AsyncMessageRelay asyncMessageRelay(MessagePublisher messagePublisher, RentalHistoryRepository rentalHistory) {
+        return new AsyncMessageRelay(messagePublisher, rentalHistory);
+    }
+
+    @Bean
     DescriptionsRepository descriptionsRepository(@Value("${url.descriptions}") String url, RestClient.Builder restClient) {
         return new RestMovieDescriptionsRepository(restClient
           .baseUrl(url)
