@@ -11,8 +11,8 @@ class RentalConfiguration {
     }
 
     @Bean
-    RentalFacade rentalFacade(MovieRepository movieRepository, DescriptionsRepository descriptions, RentalHistoryRepository rentalHistoryRepository, RentalProjections rentalProjections) {
-        return new RentalFacade(movieRepository, descriptions, rentalHistoryRepository, rentalProjections);
+    RentalFacade rentalFacade(MovieRepository movieRepository, DescriptionsRepository descriptions, RentalHistoryRepository rentalHistoryRepository, RentalProjections rentalProjections, MessagePublisher messagePublisher) {
+        return new RentalFacade(movieRepository, descriptions, rentalHistoryRepository, rentalProjections, messagePublisher);
     }
 
     @Bean

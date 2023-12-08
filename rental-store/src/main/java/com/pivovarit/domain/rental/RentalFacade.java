@@ -17,13 +17,17 @@ public record RentalFacade(
   MovieRepository movieRepository,
   DescriptionsRepository movieDescriptions,
   RentalHistoryRepository rentalHistory,
-  RentalProjections rentalProjections) {
+  RentalProjections rentalProjections,
+  MessagePublisher messagePublisher
+) {
 
     public void rentMovie(RentMovieRequest request) {
         updateWithRetry(request.accountId(), () -> {
             var userRentals = rentalProjections.userRentals(request.accountId());
             userRentals.rent(new MovieId(request.movieId()));
-            rentalHistory.save(new RentalEvent(EventType.RENT, new MovieId(request.movieId()), request.accountId(), userRentals.getVersion()));
+            var event = new RentalEvent(EventType.RENT, new MovieId(request.movieId()), request.accountId(), userRentals.getVersion());
+            rentalHistory.save(event);
+            messagePublisher.send(event);
         }, 3);
     }
 
@@ -31,8 +35,9 @@ public record RentalFacade(
         updateWithRetry(request.accountId(), () -> {
             var userRentals = rentalProjections.userRentals(request.accountId());
             userRentals.returnMovie(new MovieId(request.movieId()));
-            rentalHistory.save(new RentalEvent(EventType.RETURN, new MovieId(request.movieId()), request.accountId(), userRentals.getVersion()));
-
+            var event = new RentalEvent(EventType.RETURN, new MovieId(request.movieId()), request.accountId(), userRentals.getVersion());
+            rentalHistory.save(event);
+            messagePublisher.send(event);
         }, 3);
     }
 

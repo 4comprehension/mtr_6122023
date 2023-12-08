@@ -1,5 +1,5 @@
 package com.pivovarit.domain.rental;
 
 interface MessagePublisher {
-    void send(Object object);
+    void send(RentalEvent event);
 }

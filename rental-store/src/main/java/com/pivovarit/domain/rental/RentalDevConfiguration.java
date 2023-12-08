@@ -15,7 +15,7 @@ class RentalDevConfiguration {
     MovieRepository inmemMovieRepository() {
         return new InMemoryMovieRepository();
     }
-    
+
     @Bean
     DescriptionsRepository inmemDescriptionsRepository() {
         return movieId -> Optional.of("lorem ipsum");
@@ -24,6 +24,11 @@ class RentalDevConfiguration {
     @Bean
     RentalHistoryRepository inmemRentalHistoryRepository() {
         return new InMemoryRentalHistoryRepository();
+    }
+
+    @Bean
+    MessagePublisher loggingMessagePublisher() {
+        return event -> System.out.println("sending: " + event);
     }
 
     @Bean
