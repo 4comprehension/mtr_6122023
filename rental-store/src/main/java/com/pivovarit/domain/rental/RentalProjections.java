@@ -5,11 +5,11 @@ import static java.util.stream.Collectors.toList;
 
 record RentalProjections(RentalHistoryRepository rentalHistory) {
 
-    UserRentals userRentals(long accountId) {
+    UserRentalsAggregate userRentals(long accountId) {
         return rentalHistory.findAllBy(accountId)
           .stream().map(PersistedRentalEvent::toRentalEvent)
           .collect(collectingAndThen(
             toList(),
-            list -> new UserRentals(accountId).apply(list)));
+            list -> new UserRentalsAggregate(accountId).apply(list)));
     }
 }

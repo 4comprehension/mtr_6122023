@@ -2,27 +2,23 @@ package com.pivovarit.domain.rental;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @RequiredArgsConstructor
-class UserRentals {
+@ToString
+class UserRentalsAggregate {
     private final long accountId;
     private long version;
     private final List<MovieId> currentlyRented = new ArrayList<>();
 
-    public UserRentals apply(RentalEvent event) {
+    public UserRentalsAggregate apply(RentalEvent event) {
         switch (event.type()) {
-            case RENT -> {
-                currentlyRented.add(event.movieId());
-                version = event.accountVersion();
-            }
-            case RETURN -> {
-                currentlyRented.remove(event.movieId());
-                version = event.accountVersion();
-            }
+            case RENT -> rent(event.movieId());
+            case RETURN -> returnMovie(event.movieId());
         }
 
         return this;
@@ -48,7 +44,7 @@ class UserRentals {
         version++;
     }
 
-    public UserRentals apply(List<RentalEvent> events) {
+    public UserRentalsAggregate apply(List<RentalEvent> events) {
         events.forEach(this::apply);
         return this;
     }
@@ -63,10 +59,5 @@ class UserRentals {
 
     public boolean canReturn(MovieId movieId) {
         return currentlyRented.contains(movieId);
-    }
-
-    @Override
-    public String toString() {
-        return "UserRentals{accountId=%d, version=%d, currentlyRented=%s}".formatted(accountId, version, currentlyRented);
     }
 }
