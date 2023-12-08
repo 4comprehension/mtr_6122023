@@ -12,16 +12,29 @@ import java.util.function.Function;
 public record RentalFacade(
   MovieRepository movieRepository,
   DescriptionsRepository movieDescriptions,
-  RentalHistoryRepository rentalHistory) {
+  RentalHistoryRepository rentalHistory,
+  RentalProjections rentalProjections) {
 
     public void rentMovie(RentMovieRequest request) {
-        // TODO nie pozwalał userowi wypożyczyć więcej niż 5 filmów
-        // TODO nie pozwalał userowi wypożyczyć tego samego filmu więcej niż raz
+        var rentals = rentalProjections.userRentals(request.accountId());
+        System.out.println(rentals);
+        if (!rentals.canRentMovies()) {
+            throw new IllegalArgumentException("User has reached the maximum number of rentals");
+        }
+        if (!rentals.canRent(new MovieId(request.movieId()))) {
+            throw new IllegalArgumentException("User cannot rent movie: " + request.movieId());
+        }
         rentalHistory.save(new RentalEvent(EventType.RENT, new MovieId(request.movieId()), request.accountId()));
     }
 
     public void returnMovie(ReturnMovieRequest request) {
-        // TODO nie pozwalać userowi zwrócić tego samego filmu dwa razy
+        var rentals = rentalProjections.userRentals(request.accountId());
+        System.out.println(rentals);
+
+        if (!rentals.canReturn(new MovieId(request.movieId()))) {
+            throw new IllegalArgumentException("User cannot return movie: " + request.movieId());
+        }
+
         rentalHistory.save(new RentalEvent(EventType.RETURN, new MovieId(request.movieId()), request.accountId()));
     }
 

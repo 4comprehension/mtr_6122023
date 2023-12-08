@@ -12,18 +12,18 @@ record JdbcRentalHistoryRepository(JdbcClient jdbcClient) implements RentalHisto
         jdbcClient.sql("INSERT INTO rental_history(event_type, account_id, movie_id) VALUES(?,?,?)")
           .param(event.type().toString())
           .param(event.accountId())
-          .param(event.id().id())
+          .param(event.movieId().id())
           .update();
     }
 
     @Override
     public List<PersistedRentalEvent> findAll() {
-        return jdbcClient.sql("SELECT * FROM rental_history").query(toRentalEvent()).list();
+        return jdbcClient.sql("SELECT * FROM rental_history ORDER BY id").query(toRentalEvent()).list();
     }
 
     @Override
     public List<PersistedRentalEvent> findAllBy(long accountId) {
-        return jdbcClient.sql("SELECT * FROM rental_history WHERE account_id = ?")
+        return jdbcClient.sql("SELECT * FROM rental_history WHERE account_id = ? ORDER BY id")
           .param(accountId)
           .query(toRentalEvent()).list();
     }

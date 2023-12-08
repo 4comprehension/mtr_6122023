@@ -27,6 +27,7 @@ class MovieServiceUnitTest {
     }
 
     private static RentalFacade inMemoryInstance() {
-        return new RentalFacade(new InMemoryMovieRepository(), movieId -> Optional.empty(), new InmemoryRentalHistoryRepository());
+        var rentalHistory = new InmemoryRentalHistoryRepository();
+        return new RentalFacade(new InMemoryMovieRepository(), movieId -> Optional.empty(), rentalHistory, new RentalProjections(rentalHistory));
     }
 }

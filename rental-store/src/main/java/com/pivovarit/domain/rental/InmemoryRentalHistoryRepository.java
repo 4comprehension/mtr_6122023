@@ -11,7 +11,7 @@ class InmemoryRentalHistoryRepository implements RentalHistoryRepository {
 
     @Override
     public void save(RentalEvent event) {
-        events.add(new PersistedRentalEvent(events.size() + 1, event.type(), Instant.now(), event.accountId(), event.id()
+        events.add(new PersistedRentalEvent(events.size() + 1, event.type(), Instant.now(), event.accountId(), event.movieId()
           .id()));
     }
 
